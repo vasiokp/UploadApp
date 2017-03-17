@@ -26,8 +26,7 @@ namespace UploadApp
 		{
 			DataService.GetServiceFile();
 			DataService.GetAlbumCollection();
-			DataService.token();
-			//	DataService.CreateAlbum();
+			DataService.CreateAlbum();
 		}
 
 		private void selectBtn_Click(object sender, EventArgs e)
