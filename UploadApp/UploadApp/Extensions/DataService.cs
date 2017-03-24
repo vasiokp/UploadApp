@@ -15,6 +15,7 @@ namespace UploadApp
 	public class DataService
 	{
 		public static string AlbumCollectionUrl;
+		public static string NewAlbumId;
 		static string BaseUrl = "https://api-fotki.yandex.ru/api/users/textbook-book/";
 		static string ID = "f0afaac6ebaa43cd94fabdfb02bb65a9";
 		static string Password = "f6d1762f82704c099bbc8d9ee5e5747f";
@@ -55,7 +56,7 @@ namespace UploadApp
 
 		public static void CreateAlbum()
 		{
-			string albumName = "newAlbum";
+			string albumName = "newAlbum2";
 			string albumDesc = "descforAlbum";
 			string atomXml = "<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"><title>"+albumName +"</title> <summary>"+albumDesc+"</summary> </entry> ";
 			using (var client = new HttpClient())
@@ -70,5 +71,37 @@ namespace UploadApp
 			}
 		}
 
+		public static void UploadImg()
+		{
+			string albumId = "https://api-fotki.yandex.ru/api/users/textbook-book/album/537886/photos/?oauth_token=AQAAAAAcWgBoAAQiY_2AHS7QjklnuYLfJR11FJA";
+
+			var newLine = Environment.NewLine;
+			var boundary = "---------------------------" + DateTime.Now.Ticks;
+			var fileHeader = "--" + boundary + newLine +
+						"Content-Disposition: form-data; name=\"file1\"; filename=\"datepicker_concept.png\"" + newLine; ;
+
+			byte[] bytes = File.ReadAllBytes(@"C:\\datepicker_concept.png");
+			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(albumId);
+			request.Credentials = CredentialCache.DefaultCredentials;
+			request.Method = WebRequestMethods.Http.Post;
+			
+			request.ContentType = "multipart/form-data; boundary=" + boundary;
+			request.KeepAlive = true;
+
+			using (var reqStream = request.GetRequestStream())
+			{
+				var reqWriter = new StreamWriter(reqStream);
+				reqWriter.Write(fileHeader);
+				reqWriter.Write(bytes);
+				reqWriter.Write("--" + boundary + "--" + newLine);
+				reqWriter.Flush();
+			}
+			var res = (HttpWebResponse)request.GetResponse();
+			var resStream = res.GetResponseStream();
+			var reader = new StreamReader(resStream);
+			string resString = reader.ReadToEnd();
+		}
 	}
-}
+
+	}
+
