@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ConstData.cs" />
     <Compile Include="Extensions\DataService.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

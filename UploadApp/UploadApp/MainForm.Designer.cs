@@ -31,6 +31,8 @@
 			this.closeBtn = new System.Windows.Forms.Button();
 			this.selectBtn = new System.Windows.Forms.Button();
 			this.uploadBtn = new System.Windows.Forms.Button();
+			this.openFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
+			this.txtBox = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// closeBtn
@@ -63,17 +65,27 @@
 			this.uploadBtn.UseVisualStyleBackColor = true;
 			this.uploadBtn.Click += new System.EventHandler(this.uploadBtn_Click);
 			// 
+			// txtBox
+			// 
+			this.txtBox.Location = new System.Drawing.Point(12, 12);
+			this.txtBox.Multiline = true;
+			this.txtBox.Name = "txtBox";
+			this.txtBox.Size = new System.Drawing.Size(438, 259);
+			this.txtBox.TabIndex = 3;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(462, 317);
+			this.Controls.Add(this.txtBox);
 			this.Controls.Add(this.uploadBtn);
 			this.Controls.Add(this.selectBtn);
 			this.Controls.Add(this.closeBtn);
 			this.Name = "MainForm";
 			this.Text = "UploadApp";
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -82,6 +94,8 @@
 		private System.Windows.Forms.Button closeBtn;
 		private System.Windows.Forms.Button selectBtn;
 		private System.Windows.Forms.Button uploadBtn;
+		private System.Windows.Forms.FolderBrowserDialog openFolderDialog;
+		private System.Windows.Forms.TextBox txtBox;
 	}
 }
 
