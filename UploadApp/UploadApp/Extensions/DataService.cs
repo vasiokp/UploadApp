@@ -39,35 +39,19 @@ namespace UploadApp
 			}
 		}
 
-		public static void GetAlbumCollection()
+		public static string CreateAlbum(string albumName,string albumDesc)
 		{
+			string atomXmlCreateAlbum = "<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"><title>" + albumName + "</title> <summary>" + albumDesc + "</summary> </entry> ";
 			using (var client = new HttpClient())
 			{
-				HttpRequestMessage request = new HttpRequestMessage();
-				request.RequestUri = new Uri(AlbumCollectionUrl);
-				request.Method = HttpMethod.Get;
-				request.Headers.Add("Accept", "application /json");
-
-				HttpResponseMessage response = client.SendAsync(request).GetAwaiter().GetResult();
-				var a = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-				dynamic js = JsonConvert.DeserializeObject(a);
-			}
-		}
-
-		public static void CreateAlbum()
-		{
-			string albumName = "newAlbum2";
-			string albumDesc = "descforAlbum";
-			string atomXml = "<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"><title>" + albumName + "</title> <summary>" + albumDesc + "</summary> </entry> ";
-			using (var client = new HttpClient())
-			{
-				StringContent content = new StringContent(atomXml, Encoding.UTF8);
+				StringContent content = new StringContent(atomXmlCreateAlbum, Encoding.UTF8);
+				
 				System.Net.Http.Headers.NameValueHeaderValue typeEntry = new System.Net.Http.Headers.NameValueHeaderValue("type");
 				typeEntry.Value = "entry";
 				content.Headers.ContentType.MediaType = "application/atom+xml";
 				content.Headers.ContentType.Parameters.Add(typeEntry);
-				var a = client.PostAsync(AlbumCollectionUrl + Token, content).GetAwaiter().GetResult();
-				var b = a.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+				var result = client.PostAsync(AlbumCollectionUrl + Token, content).GetAwaiter().GetResult();
+				return result.Content.Headers.ContentLocation.ToString().Split('/')[6]; // index of id album in uri
 			}
 		}
 
