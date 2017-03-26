@@ -50,12 +50,12 @@ namespace UploadApp
 			}
 		}
 
-		private  void selectBtn_Click(object sender, EventArgs e)
+		private async void selectBtn_Click(object sender, EventArgs e)
 		{
 			DataService.GetServiceFile();
 			var app = new PowerPoint.Application();
 			var pres = app.Presentations;
-			string AlbumID;
+			string newAlbumID;
 			string[] files;
 			using (var fbd = new FolderBrowserDialog())
 			{
@@ -69,23 +69,31 @@ namespace UploadApp
 					for (int i = 0; i < files.Length; i++)
 					{
 						var file = pres.Open(files[i], MsoTriState.msoTrue, MsoTriState.msoTrue, MsoTriState.msoFalse);
-						//AlbumID = DataService.CreateAlbum("Тема 2 ", "чето - туто ы і");
+						char[] symbols = new char[] { '\\', '\0', '\a', '\b', '\f', '\n', '\r', '\t', '\v' };
+						string title;
+						string newAlbumTitle;
+						string newAlbumDescription;
+						if (file.Slides[1].Shapes.Title.TextEffect.Text.IndexOfAny(symbols) != -1)
+						{
+							title = file.Slides[1].Shapes.Title.TextEffect.Text.Substring(0, file.Slides[1].Shapes.Title.TextEffect.Text.IndexOfAny(symbols));
+							newAlbumTitle = title.Split(':', '.').FirstOrDefault();
+							newAlbumDescription = title.Split(':', '.').LastOrDefault();
+						}
+						else
+						{
+							newAlbumTitle = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').FirstOrDefault();
+							newAlbumDescription = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').LastOrDefault();
+						}
+						newAlbumID = DataService.CreateAlbum(newAlbumTitle, newAlbumDescription);
 						file.SaveCopyAs(fbd.SelectedPath+"\\presentation" + i.ToString(), PowerPoint.PpSaveAsFileType.ppSaveAsJPG, MsoTriState.msoTrue);
-
-						string[] presentationDir = Directory.GetFiles(fbd.SelectedPath + "\\presentation" + i.ToString());
-						MessageBox.Show("slides found: " + presentationDir.Length.ToString(), "Message");
-
-						//for (int j = 0; j < presentationDir.Length; j++)
-						//{
-						//	//await DataService.Upload(presentationDir[j]);
-						//}
+						string[] presentations = Directory.GetFiles(fbd.SelectedPath + "\\presentation" + i.ToString());
+						MessageBox.Show("slides found: " + presentations.Length.ToString(), "Message");
+						for (int j = 0; j < presentations.Length; j++)
+						{
+						await DataService.Upload(newAlbumID,presentations[j]);
+						}
 					}
 
-					//MessageBox.Show("Files found: " + files.Length.ToString(), "Message");
-					//for (int i = 0; i < files.Length; i++)
-					//{
-					//	//await DataService.Upload(files[i]);
-					//}
 				}
 			}
 		}

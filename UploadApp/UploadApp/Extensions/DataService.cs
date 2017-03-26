@@ -34,7 +34,6 @@ namespace UploadApp
 				HttpResponseMessage response = client.SendAsync(request).GetAwaiter().GetResult();
 				var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 				dynamic js = JsonConvert.DeserializeObject(content);
-				var de = js.collections["album-list"].href;
 				AlbumCollectionUrl = js.collections["album-list"].href;
 			}
 		}
@@ -55,18 +54,18 @@ namespace UploadApp
 			}
 		}
 
-		public static async Task Upload(string imgPath)
+		public static async Task Upload(string albumId,string imgPath)
 		{
 			byte[] image = File.ReadAllBytes(imgPath);
 			var imgName = imgPath.Split('\\').Last();
-			string albumId = "https://api-fotki.yandex.ru/api/users/textbook-book/album/537951/photos/?oauth_token=AQAAAAAcWgBoAAQiY_2AHS7QjklnuYLfJR11FJA";
+			string url = "https://api-fotki.yandex.ru/api/users/textbook-book/album/"+albumId+"/photos/?oauth_token=AQAAAAAcWgBoAAQiY_2AHS7QjklnuYLfJR11FJA";
 			using (var client = new HttpClient())
 			{
 				var requestContent = new MultipartFormDataContent();
 				var imageContent = new ByteArrayContent(image);
 				imageContent.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("image/jpeg");
 				requestContent.Add(imageContent, "image", imgName);
-				await client.PostAsync(albumId, requestContent);
+				await client.PostAsync(url, requestContent);
 			}
 		}
 	}
