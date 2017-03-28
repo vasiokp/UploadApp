@@ -58,7 +58,8 @@ namespace UploadApp
 		{
 			byte[] image = File.ReadAllBytes(imgPath);
 			var imgName = imgPath.Split('\\').Last();
-			string url = "https://api-fotki.yandex.ru/api/users/textbook-book/album/"+albumId+"/photos/?oauth_token=AQAAAAAcWgBoAAQiY_2AHS7QjklnuYLfJR11FJA";
+
+			string url = "https://api-fotki.yandex.ru/api/users/textbook-book/album/"+albumId+"/photos/"+Token;
 			using (var client = new HttpClient())
 			{
 				var requestContent = new MultipartFormDataContent();
