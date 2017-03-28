@@ -78,7 +78,7 @@ namespace UploadApp
 			for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
 			{
 				var titleInGrid = presentationsGrid.Rows[i].Cells[0].EditedFormattedValue;
-				newAlbumID = DataService.CreateAlbum(titleInGrid.ToString().Split('.').FirstOrDefault(), titleInGrid.ToString().Split('.').LastOrDefault());
+			//	newAlbumID = DataService.CreateAlbum(selectItem.se,titleInGrid.ToString().Split('.').FirstOrDefault(), titleInGrid.ToString().Split('.').LastOrDefault());
 
 			}
 		}

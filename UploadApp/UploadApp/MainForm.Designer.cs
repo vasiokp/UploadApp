@@ -35,12 +35,13 @@
 			this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slidesCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.uploadBtn = new System.Windows.Forms.Button();
+			this.selectItem = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.presentationsGrid)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// closeBtn
 			// 
-			this.closeBtn.Location = new System.Drawing.Point(335, 339);
+			this.closeBtn.Location = new System.Drawing.Point(370, 481);
 			this.closeBtn.Name = "closeBtn";
 			this.closeBtn.Size = new System.Drawing.Size(96, 28);
 			this.closeBtn.TabIndex = 0;
@@ -50,7 +51,7 @@
 			// 
 			// selectBtn
 			// 
-			this.selectBtn.Location = new System.Drawing.Point(12, 339);
+			this.selectBtn.Location = new System.Drawing.Point(47, 481);
 			this.selectBtn.Name = "selectBtn";
 			this.selectBtn.Size = new System.Drawing.Size(96, 28);
 			this.selectBtn.TabIndex = 1;
@@ -64,7 +65,7 @@
 			this.presentationsGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.title,
             this.slidesCount});
-			this.presentationsGrid.Location = new System.Drawing.Point(12, 72);
+			this.presentationsGrid.Location = new System.Drawing.Point(47, 214);
 			this.presentationsGrid.Name = "presentationsGrid";
 			this.presentationsGrid.Size = new System.Drawing.Size(493, 185);
 			this.presentationsGrid.TabIndex = 2;
@@ -83,7 +84,7 @@
 			// 
 			// uploadBtn
 			// 
-			this.uploadBtn.Location = new System.Drawing.Point(208, 339);
+			this.uploadBtn.Location = new System.Drawing.Point(243, 481);
 			this.uploadBtn.Name = "uploadBtn";
 			this.uploadBtn.Size = new System.Drawing.Size(96, 28);
 			this.uploadBtn.TabIndex = 3;
@@ -91,11 +92,20 @@
 			this.uploadBtn.UseVisualStyleBackColor = true;
 			this.uploadBtn.Click += new System.EventHandler(this.uploadBtn_Click);
 			// 
+			// selectItem
+			// 
+			this.selectItem.FormattingEnabled = true;
+			this.selectItem.Location = new System.Drawing.Point(12, 12);
+			this.selectItem.Name = "selectItem";
+			this.selectItem.Size = new System.Drawing.Size(296, 21);
+			this.selectItem.TabIndex = 4;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(748, 379);
+			this.ClientSize = new System.Drawing.Size(634, 569);
+			this.Controls.Add(this.selectItem);
 			this.Controls.Add(this.uploadBtn);
 			this.Controls.Add(this.presentationsGrid);
 			this.Controls.Add(this.selectBtn);
@@ -116,6 +126,7 @@
 		private System.Windows.Forms.Button uploadBtn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn title;
 		private System.Windows.Forms.DataGridViewTextBoxColumn slidesCount;
+		private System.Windows.Forms.ComboBox selectItem;
 	}
 }
 

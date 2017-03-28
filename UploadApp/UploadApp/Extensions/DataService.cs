@@ -38,9 +38,9 @@ namespace UploadApp
 			}
 		}
 
-		public static string CreateAlbum(string albumName,string albumDesc)
+		public static string CreateAlbum(string parrentAlbumId,string albumName,string albumDesc)
 		{
-			string atomXmlCreateAlbum = "<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"><title>" + albumName + "</title> <summary>" + albumDesc + "</summary> </entry> ";
+			string atomXmlCreateAlbum = string.Format("<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"> <link href=\""+ BaseUrl +"album\"{0} < title>{0}</title> <summary>{2}</summary> </entry>", parrentAlbumId, albumName, albumDesc);
 			using (var client = new HttpClient())
 			{
 				StringContent content = new StringContent(atomXmlCreateAlbum, Encoding.UTF8);
