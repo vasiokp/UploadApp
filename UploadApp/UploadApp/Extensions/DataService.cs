@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
-using System.Xml;
 using Newtonsoft.Json;
-using System.Text.RegularExpressions;
-using System.Net;
 using System.IO;
 
 namespace UploadApp
@@ -15,7 +11,6 @@ namespace UploadApp
 	public static class DataService
 	{
 		public static string AlbumCollectionUrl;
-		public static string NewAlbumId;
 		public const string BaseUrl = "https://api-fotki.yandex.ru/api/users/textbook-book/";
 		private const string ID = "f0afaac6ebaa43cd94fabdfb02bb65a9";
 		private const string Password = "f6d1762f82704c099bbc8d9ee5e5747f";
@@ -51,10 +46,15 @@ namespace UploadApp
 
 		public static string CreateAlbum(string albumName,string albumDesc, string parrentAlbumId = "0")
 		{
-			var atomXmlCreateAlbum = "<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"> "+
-			                         parrentAlbumId !="0" ? "<link href=\"" +BaseUrl +$"album\"{parrentAlbumId}\" rel=\"album\"/>" :
-															$"<title>{albumName}</title> <summary>{albumDesc}</summary> </entry>";
-			using (var client = new HttpClient())
+			string atomXmlCreateAlbum;
+			if (parrentAlbumId != "0")
+				atomXmlCreateAlbum = "<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"> " +
+				                     "<link href=\"" + BaseUrl + $"album\"{parrentAlbumId}\" rel=\"album\"/>" +
+									 $"<title>{albumName}</title> <summary>{albumDesc}</summary> </entry>";
+			else
+				atomXmlCreateAlbum = "<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"> " +
+									 $"<title>{albumName}</title> <summary>{albumDesc}</summary> </entry>";
+				using (var client = new HttpClient())
 			{
 				var content = new StringContent(atomXmlCreateAlbum, Encoding.UTF8);
 				var typeEntry = new System.Net.Http.Headers.NameValueHeaderValue("type")

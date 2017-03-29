@@ -7,22 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static UploadApp.AlbumModel;
 
 namespace UploadApp.Forms
 {
 	public partial class AddItemForm : Form
 	{
-		private string newAlbumId;
 
 		public AddItemForm()
 		{
 			InitializeComponent();
 		}
 
-		public AddItemForm(string newAlbumId)
-		{
-			this.newAlbumId = newAlbumId;
-		}
 
 		private void closeAddItemFormBtn_Click(object sender, EventArgs e) => Close();
 
@@ -30,8 +26,11 @@ namespace UploadApp.Forms
 		{
 			if (subjectNameTxt.Text != "")
 			{
-			 DataService.CreateAlbum(subjectNameTxt.Text, subjectDescTxt.Text);
+				AlbumName = subjectNameTxt.Text.Trim();
+				AlbumDesc = subjectDescTxt.Text.Trim(); 
+				AlbumId =  DataService.CreateAlbum(AlbumName, AlbumDesc);
 			}
+
 		}
 	}
 }

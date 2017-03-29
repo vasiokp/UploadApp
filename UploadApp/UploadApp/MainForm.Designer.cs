@@ -124,6 +124,7 @@
 			this.Controls.Add(this.closeBtn);
 			this.Name = "MainForm";
 			this.Text = "UploadApp";
+			this.Load += new System.EventHandler(this.MainForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.presentationsGrid)).EndInit();
 			this.ResumeLayout(false);
 

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Office.Core;
 using UploadApp.Forms;
+using static UploadApp.AlbumModel;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 
 namespace UploadApp
@@ -27,11 +28,11 @@ namespace UploadApp
 		}
 
 		private string	SelectedPath { get; set; }
-		public string	newAlbumId { get; set; }
+
+		
 
 		private void selectBtn_Click(object sender, EventArgs e)
 		{
-			DataService.GetServiceFile();
 			var app = new PowerPoint.Application();
 			var pres = app.Presentations;
 			using (var fbd = new FolderBrowserDialog())
@@ -46,22 +47,20 @@ namespace UploadApp
 					{
 						var file = pres.Open(files[i], MsoTriState.msoTrue, MsoTriState.msoTrue, MsoTriState.msoFalse);
 						char[] symbols = { '\\', '\0', '\a', '\b', '\f', '\n', '\r', '\t', '\v' };
-						string newAlbumTitle;
-						string newAlbumDescription;
 						if (file.Slides[1].Shapes.Title.TextEffect.Text.IndexOfAny(symbols) != -1)
 							{
 								var title = file.Slides[1].Shapes.Title.TextEffect.Text.Substring(0, file.Slides[1].Shapes.Title.TextEffect.Text.IndexOfAny(symbols));
-								newAlbumTitle = title.Split(':', '.').FirstOrDefault();
-								newAlbumDescription = title.Split(':', '.').LastOrDefault();
+								AlbumName = title.Split(':', '.').FirstOrDefault();
+								AlbumDesc = title.Split(':', '.').LastOrDefault();
 							}
 						else
 							{
-								newAlbumTitle = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').FirstOrDefault();
-								newAlbumDescription = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').LastOrDefault();
+								AlbumName = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').FirstOrDefault();
+								AlbumDesc = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').LastOrDefault();
 							}
 						file.SaveCopyAs(SelectedPath + "\\presentation" + i+1, PowerPoint.PpSaveAsFileType.ppSaveAsJPG, MsoTriState.msoTrue);
 						string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + i+1);
-						presentationsGrid.Rows.Add(newAlbumTitle.Trim() + ". " + newAlbumDescription.Trim(), presentations.Length);
+						presentationsGrid.Rows.Add(AlbumName.Trim() + ". " + AlbumDesc.Trim(), presentations.Length);
 					}
 				}
 			}
@@ -69,8 +68,6 @@ namespace UploadApp
 
 		private void uploadBtn_Click(object sender, EventArgs e)
 		{
-			string newAlbumID;
-			DataService.DeleteAlbum("538303");
 			//for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
 			//{
 			//	string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + i + 1);
@@ -86,8 +83,15 @@ namespace UploadApp
 
 		private void addItemBtn_Click(object sender, EventArgs e)
 		{
-			var itemForm = new AddItemForm(newAlbumId);
-			itemForm.Show();
+			var itemForm = new AddItemForm();
+			itemForm.ShowDialog();
+			var a = AlbumId;
+			
+		}
+
+		private void MainForm_Load(object sender, EventArgs e)
+		{
+			DataService.GetServiceFile();
 		}
 	}
 }
