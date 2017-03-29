@@ -35,7 +35,8 @@
 			this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slidesCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.uploadBtn = new System.Windows.Forms.Button();
-			this.selectItem = new System.Windows.Forms.ComboBox();
+			this.itemDropDown = new System.Windows.Forms.ComboBox();
+			this.addItemBtn = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.presentationsGrid)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -92,20 +93,31 @@
 			this.uploadBtn.UseVisualStyleBackColor = true;
 			this.uploadBtn.Click += new System.EventHandler(this.uploadBtn_Click);
 			// 
-			// selectItem
+			// itemDropDown
 			// 
-			this.selectItem.FormattingEnabled = true;
-			this.selectItem.Location = new System.Drawing.Point(12, 12);
-			this.selectItem.Name = "selectItem";
-			this.selectItem.Size = new System.Drawing.Size(296, 21);
-			this.selectItem.TabIndex = 4;
+			this.itemDropDown.FormattingEnabled = true;
+			this.itemDropDown.Location = new System.Drawing.Point(12, 12);
+			this.itemDropDown.Name = "itemDropDown";
+			this.itemDropDown.Size = new System.Drawing.Size(200, 21);
+			this.itemDropDown.TabIndex = 4;
+			// 
+			// addItemBtn
+			// 
+			this.addItemBtn.Location = new System.Drawing.Point(243, 10);
+			this.addItemBtn.Name = "addItemBtn";
+			this.addItemBtn.Size = new System.Drawing.Size(84, 23);
+			this.addItemBtn.TabIndex = 5;
+			this.addItemBtn.Text = "Add new";
+			this.addItemBtn.UseVisualStyleBackColor = true;
+			this.addItemBtn.Click += new System.EventHandler(this.addItemBtn_Click);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(634, 569);
-			this.Controls.Add(this.selectItem);
+			this.Controls.Add(this.addItemBtn);
+			this.Controls.Add(this.itemDropDown);
 			this.Controls.Add(this.uploadBtn);
 			this.Controls.Add(this.presentationsGrid);
 			this.Controls.Add(this.selectBtn);
@@ -126,7 +138,8 @@
 		private System.Windows.Forms.Button uploadBtn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn title;
 		private System.Windows.Forms.DataGridViewTextBoxColumn slidesCount;
-		private System.Windows.Forms.ComboBox selectItem;
+		private System.Windows.Forms.ComboBox itemDropDown;
+		private System.Windows.Forms.Button addItemBtn;
 	}
 }
 

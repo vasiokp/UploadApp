@@ -12,16 +12,27 @@ using System.IO;
 
 namespace UploadApp
 {
-	public class DataService
+	public static class DataService
 	{
 		public static string AlbumCollectionUrl;
 		public static string NewAlbumId;
 		public const string BaseUrl = "https://api-fotki.yandex.ru/api/users/textbook-book/";
-		public const string ID = "f0afaac6ebaa43cd94fabdfb02bb65a9";
-		public const string Password = "f6d1762f82704c099bbc8d9ee5e5747f";
-		public const string token = "AQAAAAAcWgBoAAQiY_2AHS7QjklnuYLfJR11FJA";
-		public const string Token = "?oauth_token=AQAAAAAcWgBoAAQiY_2AHS7QjklnuYLfJR11FJA";
+		private const string ID = "f0afaac6ebaa43cd94fabdfb02bb65a9";
+		private const string Password = "f6d1762f82704c099bbc8d9ee5e5747f";
+		private const string token = "AQAAAAAcWgBoAAQiY_2AHS7QjklnuYLfJR11FJA";
+		private const string Token = "?oauth_token=AQAAAAAcWgBoAAQiY_2AHS7QjklnuYLfJR11FJA";
 
+		public static void DeleteAlbum(string albumId)
+		{
+			using (var client = new HttpClient())
+			{
+				var request = new HttpRequestMessage();
+				request.RequestUri = new Uri(BaseUrl+"album/" + albumId + "/" +Token);
+				request.Method = HttpMethod.Delete;
+				request.Headers.Add("Accept", "application /json");
+				var response = client.SendAsync(request).GetAwaiter().GetResult();
+			}
+		}
 		public static void GetServiceFile()
 		{
 			using (var client = new HttpClient())
@@ -38,15 +49,18 @@ namespace UploadApp
 			}
 		}
 
-		public static string CreateAlbum(string parrentAlbumId,string albumName,string albumDesc)
+		public static string CreateAlbum(string albumName,string albumDesc, string parrentAlbumId = "0")
 		{
-			string atomXmlCreateAlbum = string.Format("<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"> <link href=\""+ BaseUrl +"album\"{0} < title>{0}</title> <summary>{2}</summary> </entry>", parrentAlbumId, albumName, albumDesc);
+			var atomXmlCreateAlbum = "<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"> "+
+			                         parrentAlbumId !="0" ? "<link href=\"" +BaseUrl +$"album\"{parrentAlbumId}\" rel=\"album\"/>" :
+															$"<title>{albumName}</title> <summary>{albumDesc}</summary> </entry>";
 			using (var client = new HttpClient())
 			{
-				StringContent content = new StringContent(atomXmlCreateAlbum, Encoding.UTF8);
-				
-				System.Net.Http.Headers.NameValueHeaderValue typeEntry = new System.Net.Http.Headers.NameValueHeaderValue("type");
-				typeEntry.Value = "entry";
+				var content = new StringContent(atomXmlCreateAlbum, Encoding.UTF8);
+				var typeEntry = new System.Net.Http.Headers.NameValueHeaderValue("type")
+				{
+					Value = "entry"
+				};
 				content.Headers.ContentType.MediaType = "application/atom+xml";
 				content.Headers.ContentType.Parameters.Add(typeEntry);
 				var result = client.PostAsync(AlbumCollectionUrl + Token, content).GetAwaiter().GetResult();
@@ -59,7 +73,7 @@ namespace UploadApp
 			byte[] image = File.ReadAllBytes(imgPath);
 			var imgName = imgPath.Split('\\').Last();
 
-			string url = "https://api-fotki.yandex.ru/api/users/textbook-book/album/"+albumId+"/photos/"+Token;
+			string url = BaseUrl+"album/"+albumId+"/photos/"+Token;
 			using (var client = new HttpClient())
 			{
 				var requestContent = new MultipartFormDataContent();
