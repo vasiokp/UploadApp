@@ -26,9 +26,16 @@ namespace UploadApp.Forms
 		{
 			if (subjectNameTxt.Text != "")
 			{
-				AlbumName = subjectNameTxt.Text.Trim();
-				AlbumDesc = subjectDescTxt.Text.Trim(); 
-				AlbumId =  DataService.CreateAlbum(AlbumName, AlbumDesc);
+				var id = DataService.CreateAlbum(subjectNameTxt.Text.Trim(), subjectDescTxt.Text.Trim());
+				var album = new AlbumModel(
+					id: id,
+					name: subjectNameTxt.Text.Trim(),
+					desc: subjectDescTxt.Text.Trim());
+				if (id != null)
+				{
+					AlbumsList.Add(album);
+					Close();
+				}
 			}
 
 		}

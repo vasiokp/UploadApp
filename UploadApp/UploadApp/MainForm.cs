@@ -29,7 +29,6 @@ namespace UploadApp
 
 		private string	SelectedPath { get; set; }
 
-		
 
 		private void selectBtn_Click(object sender, EventArgs e)
 		{
@@ -68,6 +67,7 @@ namespace UploadApp
 
 		private void uploadBtn_Click(object sender, EventArgs e)
 		{
+			MessageBox.Show(AlbumId);
 			//for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
 			//{
 			//	string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + i + 1);
@@ -84,13 +84,16 @@ namespace UploadApp
 		private void addItemBtn_Click(object sender, EventArgs e)
 		{
 			var itemForm = new AddItemForm();
+
 			itemForm.ShowDialog();
 			var a = AlbumId;
-			
+			var b = AlbumsList;
+
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
+			AlbumsList = new List<AlbumModel>();
 			DataService.GetServiceFile();
 		}
 	}
