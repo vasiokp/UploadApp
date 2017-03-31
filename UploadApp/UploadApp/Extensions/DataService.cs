@@ -49,7 +49,7 @@ namespace UploadApp
 			string atomXmlCreateAlbum;
 			if (parrentAlbumId != "0")
 				atomXmlCreateAlbum = "<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"> " +
-				                     "<link href=\"" + BaseUrl + $"album\"{parrentAlbumId}\" rel=\"album\"/>" +
+				                     "<link href=\"" + BaseUrl + "album/"+parrentAlbumId+"/\" rel=\"album\"/>" +
 									 $"<title>{albumName}</title> <summary>{albumDesc}</summary> </entry>";
 			else
 				atomXmlCreateAlbum = "<entry xmlns=\"http://www.w3.org/2005/Atom\" xmlns:f=\"yandex:fotki\"> " +

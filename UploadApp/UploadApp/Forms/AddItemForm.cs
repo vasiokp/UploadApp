@@ -24,20 +24,12 @@ namespace UploadApp.Forms
 
 		private void CreateItemBtn_Click(object sender, EventArgs e)
 		{
-			if (subjectNameTxt.Text != "")
+			if (subjectNameTxt.Text.Trim() != "")
 			{
-				var id = DataService.CreateAlbum(subjectNameTxt.Text.Trim(), subjectDescTxt.Text.Trim());
-				var album = new AlbumModel(
-					id: id,
-					name: subjectNameTxt.Text.Trim(),
-					desc: subjectDescTxt.Text.Trim());
-				if (id != null)
-				{
-					AlbumsList.Add(album);
-					Close();
-				}
+				AlbumName = subjectNameTxt.Text.Trim();
+				AlbumDesc = subjectDescTxt.Text.Trim();
+				Close();
 			}
-
 		}
 	}
 }

@@ -65,20 +65,24 @@ namespace UploadApp
 			}
 		}
 
-		private void uploadBtn_Click(object sender, EventArgs e)
+		private async void uploadBtn_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show(AlbumId);
-			//for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
-			//{
-			//	string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + i + 1);
+			AlbumId = DataService.CreateAlbum(AlbumName, AlbumDesc);
 
-			//	var titleInGrid = presentationsGrid.Rows[i].Cells[0].EditedFormattedValue;
-			//	//newAlbumID = DataService.CreateAlbum(selectItem.se,titleInGrid.ToString().Split('.').FirstOrDefault(), titleInGrid.ToString().Split('.').LastOrDefault());
-			//					//	for (int j = 0; j < presentations.Length; j++)
-			//			//{
-			//			//await DataService.Upload(newAlbumID,presentations[j]);
-			//		//	}
-			//}
+					//AlbumsList.Add(album);
+
+			for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
+			{
+				string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + i + 1);
+				var titleInGrid = presentationsGrid.Rows[i].Cells[0].EditedFormattedValue;
+				AlbumName = titleInGrid.ToString().Split('.').FirstOrDefault()+".";
+				AlbumDesc = titleInGrid.ToString().Split('.').LastOrDefault();
+				var newAlbumId = DataService.CreateAlbum(AlbumName, AlbumDesc, AlbumId);
+					for (int j = 0; j < presentations.Length; j++)
+						{
+							await DataService.Upload(newAlbumId, presentations[j]);
+						}
+			}
 		}
 
 		private void addItemBtn_Click(object sender, EventArgs e)
