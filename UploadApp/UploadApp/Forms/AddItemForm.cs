@@ -31,5 +31,10 @@ namespace UploadApp.Forms
 				Close();
 			}
 		}
+
+		private void AddItemForm_Load(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

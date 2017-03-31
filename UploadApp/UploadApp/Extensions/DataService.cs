@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.IO;
+using System.Runtime.CompilerServices;
+using static UploadApp.AlbumModel;
 
 namespace UploadApp
 {
@@ -41,6 +44,36 @@ namespace UploadApp
 				var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 				dynamic js = JsonConvert.DeserializeObject(content);
 				AlbumCollectionUrl = js.collections["album-list"].href;
+			}
+		}
+
+		public static void GetAlbumList()
+		{
+			AlbumsList = new List<AlbumListItem>();
+			using (var client = new HttpClient())
+			{
+				HttpRequestMessage request = new HttpRequestMessage();
+				request.RequestUri = new Uri(AlbumCollectionUrl);
+				request.Method = HttpMethod.Get;
+				request.Headers.Add("Accept", "application /json");
+
+				HttpResponseMessage response = client.SendAsync(request).GetAwaiter().GetResult();
+				var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+				dynamic js = JsonConvert.DeserializeObject(content);
+				dynamic list  = js.entries;
+				for (int i = 0; i < list.Count; i++)
+				{
+					if (list[i].links["album"]!=null)
+					{
+					}
+					else
+					{
+						var album = list[i].title.Value ;
+						var albumId = list[i].links["alternate"].ToString().Split('/')[6]; // index of id album in uri ;
+						var s = new AlbumListItem(albumId, album);
+							AlbumsList.Add(s);
+					};
+				}
 			}
 		}
 

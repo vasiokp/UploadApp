@@ -67,9 +67,10 @@ namespace UploadApp
 
 		private async void uploadBtn_Click(object sender, EventArgs e)
 		{
-			AlbumId = DataService.CreateAlbum(AlbumName, AlbumDesc);
-
-					//AlbumsList.Add(album);
+			//AlbumId = DataService.CreateAlbum(AlbumName, AlbumDesc);
+			AlbumId = itemDropDown.SelectedValue.ToString();
+			var album = new AlbumListItem(AlbumId, AlbumName);
+			AlbumsList.Add(album);
 
 			for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
 			{
@@ -98,8 +99,11 @@ namespace UploadApp
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			AlbumsList = new List<AlbumModel>();
 			DataService.GetServiceFile();
+			DataService.GetAlbumList();
+			itemDropDown.DataSource = AlbumsList;
+			itemDropDown.DisplayMember = "Name";
+			itemDropDown.ValueMember = "Id";
 		}
 	}
 }
