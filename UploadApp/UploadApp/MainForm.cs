@@ -57,8 +57,8 @@ namespace UploadApp
 								AlbumName = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').FirstOrDefault();
 								AlbumDesc = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').LastOrDefault();
 							}
-						file.SaveCopyAs(SelectedPath + "\\presentation" + i+1, PowerPoint.PpSaveAsFileType.ppSaveAsJPG, MsoTriState.msoTrue);
-						string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + i+1);
+						file.SaveCopyAs(SelectedPath + "\\presentation" + (i+1).ToString(), PowerPoint.PpSaveAsFileType.ppSaveAsJPG, MsoTriState.msoTrue);
+						string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + (i + 1).ToString());
 						presentationsGrid.Rows.Add(AlbumName.Trim() + ". " + AlbumDesc.Trim(), presentations.Length);
 					}
 				}
@@ -73,7 +73,7 @@ namespace UploadApp
 
 			for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
 			{
-				string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + i + 1);
+				string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + (i + 1).ToString());
 				var titleInGrid = presentationsGrid.Rows[i].Cells[0].EditedFormattedValue;
 				AlbumName = titleInGrid.ToString().Split('.').FirstOrDefault()+".";
 				AlbumDesc = titleInGrid.ToString().Split('.').LastOrDefault();
@@ -82,6 +82,7 @@ namespace UploadApp
 						{
 							await DataService.Upload(newAlbumId, presentations[j]);
 						}
+				Directory.Delete(SelectedPath + "\\presentation" + (i + 1).ToString(),true);
 			}
 		}
 
