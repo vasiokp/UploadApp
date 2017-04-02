@@ -29,7 +29,6 @@ namespace UploadApp
 
 		private string	SelectedPath { get; set; }
 
-
 		private void selectBtn_Click(object sender, EventArgs e)
 		{
 			var app = new PowerPoint.Application();
@@ -67,10 +66,12 @@ namespace UploadApp
 
 		private async void uploadBtn_Click(object sender, EventArgs e)
 		{
-			//AlbumId = DataService.CreateAlbum(AlbumName, AlbumDesc);
-			AlbumId = itemDropDown.SelectedValue.ToString();
+			AlbumId = itemDropDown.SelectedValue.ToString() == "0"
+				? AlbumId = DataService.CreateAlbum(AlbumName, AlbumDesc)
+				: AlbumId = itemDropDown.SelectedValue.ToString();
+
 			var album = new AlbumListItem(AlbumId, AlbumName);
-			AlbumsList.Add(album);
+			bindinglist.Add(album);
 
 			for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
 			{
@@ -92,18 +93,35 @@ namespace UploadApp
 			var itemForm = new AddItemForm();
 
 			itemForm.ShowDialog();
+			//itemDropDown.DataSource = AlbumsList;
+			//itemDropDown.Refresh();
 			var a = AlbumId;
-			var b = AlbumsList;
 
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
+			bindinglist = new BindingList<AlbumListItem>();
+			bSource = new BindingSource();
 			DataService.GetServiceFile();
 			DataService.GetAlbumList();
-			itemDropDown.DataSource = AlbumsList;
+			//itemDropDown.DataSource = AlbumsList;
+			bSource.DataSource = bindinglist;
+			itemDropDown.DataSource = bSource;
 			itemDropDown.DisplayMember = "Name";
 			itemDropDown.ValueMember = "Id";
+		}
+
+		private void deleteBtn_Click(object sender, EventArgs e)
+		{
+			dynamic subhName = itemDropDown.SelectedItem;
+			var deleteForm  = new DeleteSubjectForm(subhName.Id,subhName.Name);
+			deleteForm.ShowDialog();
+		}
+
+		private void itemDropDown_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

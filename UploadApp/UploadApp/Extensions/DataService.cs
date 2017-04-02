@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 using static UploadApp.AlbumModel;
 
 namespace UploadApp
@@ -20,7 +22,7 @@ namespace UploadApp
 		private const string token = "AQAAAAAcWgBoAAQiY_2AHS7QjklnuYLfJR11FJA";
 		private const string Token = "?oauth_token=AQAAAAAcWgBoAAQiY_2AHS7QjklnuYLfJR11FJA";
 
-		public static void DeleteAlbum(string albumId)
+		public static bool DeleteAlbum(string albumId)
 		{
 			using (var client = new HttpClient())
 			{
@@ -28,7 +30,10 @@ namespace UploadApp
 				request.RequestUri = new Uri(BaseUrl+"album/" + albumId + "/" +Token);
 				request.Method = HttpMethod.Delete;
 				request.Headers.Add("Accept", "application /json");
-				var response = client.SendAsync(request).GetAwaiter().GetResult();
+				dynamic response = client.SendAsync(request).GetAwaiter().GetResult();
+				if (response.StatusCode == 204)
+					return true;
+				else return false;
 			}
 		}
 		public static void GetServiceFile()
@@ -49,7 +54,7 @@ namespace UploadApp
 
 		public static void GetAlbumList()
 		{
-			AlbumsList = new List<AlbumListItem>();
+
 			using (var client = new HttpClient())
 			{
 				HttpRequestMessage request = new HttpRequestMessage();
@@ -71,7 +76,7 @@ namespace UploadApp
 						var album = list[i].title.Value ;
 						var albumId = list[i].links["alternate"].ToString().Split('/')[6]; // index of id album in uri ;
 						var s = new AlbumListItem(albumId, album);
-							AlbumsList.Add(s);
+							bindinglist.Add(s);
 					};
 				}
 			}

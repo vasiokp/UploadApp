@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace UploadApp
 {
@@ -11,7 +13,9 @@ namespace UploadApp
 		public static string AlbumId { get; set; }
 		public static string AlbumName { get; set; }
 		public static string AlbumDesc { get; set; }
-		public static List<AlbumListItem> AlbumsList { get; set; }
+		public static BindingList<AlbumListItem> bindinglist { get; set; }
+		public static BindingSource bSource { get; set; }
+
 
 		public AlbumModel(string id, string name, string desc)
 		{

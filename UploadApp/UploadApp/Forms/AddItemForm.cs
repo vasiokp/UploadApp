@@ -28,6 +28,7 @@ namespace UploadApp.Forms
 			{
 				AlbumName = subjectNameTxt.Text.Trim();
 				AlbumDesc = subjectDescTxt.Text.Trim();
+				bindinglist.Add(new AlbumListItem("0", AlbumName));
 				Close();
 			}
 		}
