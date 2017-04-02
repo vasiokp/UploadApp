@@ -85,7 +85,7 @@
 			this.Controls.Add(this.noBtn);
 			this.Controls.Add(this.yesBtn);
 			this.Name = "DeleteSubjectForm";
-			this.Text = "DeleteSubjectForm";
+			this.Text = "Delete subject";
 			this.Load += new System.EventHandler(this.DeleteSubjectForm_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();

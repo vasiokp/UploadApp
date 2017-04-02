@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.IO;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using static UploadApp.AlbumModel;
@@ -30,12 +31,13 @@ namespace UploadApp
 				request.RequestUri = new Uri(BaseUrl+"album/" + albumId + "/" +Token);
 				request.Method = HttpMethod.Delete;
 				request.Headers.Add("Accept", "application /json");
-				dynamic response = client.SendAsync(request).GetAwaiter().GetResult();
-				if (response.StatusCode == 204)
+				HttpResponseMessage response = client.SendAsync(request).GetAwaiter().GetResult();
+				if (response.StatusCode == HttpStatusCode.NoContent)
 					return true;
-				else return false;
+				return false;
 			}
 		}
+
 		public static void GetServiceFile()
 		{
 			using (var client = new HttpClient())

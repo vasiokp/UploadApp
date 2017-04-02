@@ -102,7 +102,7 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.subjectNameTxt);
 			this.Name = "AddItemForm";
-			this.Text = "AddItemForm";
+			this.Text = "Add new subject";
 			this.Load += new System.EventHandler(this.AddItemForm_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();

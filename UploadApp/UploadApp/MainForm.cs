@@ -66,12 +66,18 @@ namespace UploadApp
 
 		private async void uploadBtn_Click(object sender, EventArgs e)
 		{
-			AlbumId = itemDropDown.SelectedValue.ToString() == "0"
+			dynamic selectedItem = itemDropDown.SelectedItem;
+			AlbumName = selectedItem.Name;
+			AlbumId = selectedItem.Id;
+			AlbumId = selectedItem.Id == "0"
 				? AlbumId = DataService.CreateAlbum(AlbumName, AlbumDesc)
-				: AlbumId = itemDropDown.SelectedValue.ToString();
+				: AlbumId = selectedItem.Id;
 
 			var album = new AlbumListItem(AlbumId, AlbumName);
 			bindinglist.Add(album);
+			itemDropDown.SelectedItem = album;
+			bindinglist.Remove(selectedItem);
+
 
 			for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
 			{
@@ -91,12 +97,7 @@ namespace UploadApp
 		private void addItemBtn_Click(object sender, EventArgs e)
 		{
 			var itemForm = new AddItemForm();
-
 			itemForm.ShowDialog();
-			//itemDropDown.DataSource = AlbumsList;
-			//itemDropDown.Refresh();
-			var a = AlbumId;
-
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
@@ -105,7 +106,6 @@ namespace UploadApp
 			bSource = new BindingSource();
 			DataService.GetServiceFile();
 			DataService.GetAlbumList();
-			//itemDropDown.DataSource = AlbumsList;
 			bSource.DataSource = bindinglist;
 			itemDropDown.DataSource = bSource;
 			itemDropDown.DisplayMember = "Name";
