@@ -94,7 +94,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(280, 226);
+			this.ClientSize = new System.Drawing.Size(259, 210);
 			this.Controls.Add(this.CreateItemBtn);
 			this.Controls.Add(this.closeAddItemFormBtn);
 			this.Controls.Add(this.subjectDescTxt);

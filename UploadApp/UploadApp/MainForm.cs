@@ -114,8 +114,8 @@ namespace UploadApp
 
 		private void deleteBtn_Click(object sender, EventArgs e)
 		{
-			dynamic subhName = itemDropDown.SelectedItem;
-			var deleteForm  = new DeleteSubjectForm(subhName.Id,subhName.Name);
+			dynamic subjName = itemDropDown.SelectedItem;
+			var deleteForm  = new DeleteSubjectForm(subjName.Id, subjName.Name);
 			deleteForm.ShowDialog();
 		}
 
