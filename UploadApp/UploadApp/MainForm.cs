@@ -31,6 +31,7 @@ namespace UploadApp
 
 		private void selectBtn_Click(object sender, EventArgs e)
 		{
+
 			var app = new PowerPoint.Application();
 			var pres = app.Presentations;
 			using (var fbd = new FolderBrowserDialog())
@@ -41,8 +42,12 @@ namespace UploadApp
 				if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(SelectedPath))
 				{
 					var files = Directory.GetFiles(SelectedPath);
+					progressBar.Maximum = files.Length;
+					progressBar.Step = 1;
+
 					for (int i = 0; i < files.Length; i++)
 					{
+						progressBar.PerformStep();
 						var file = pres.Open(files[i], MsoTriState.msoTrue, MsoTriState.msoTrue, MsoTriState.msoFalse);
 						char[] symbols = { '\\', '\0', '\a', '\b', '\f', '\n', '\r', '\t', '\v' };
 						if (file.Slides[1].Shapes.Title.TextEffect.Text.IndexOfAny(symbols) != -1)
@@ -77,11 +82,17 @@ namespace UploadApp
 			bindinglist.Add(album);
 			itemDropDown.SelectedItem = album;
 			bindinglist.Remove(selectedItem);
-
+			progressBar.Value = 0;
+			progressBar.Maximum = presentationsGrid.Rows.Count - 1;
+			progressBar.Step = 1;
 
 			for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
 			{
+				progressBar.PerformStep();
 				string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + (i + 1).ToString());
+				progressUpload.Value = 0;
+				progressUpload.Maximum = presentations.Length;
+				progressUpload.Step = 1;
 				var titleInGrid = presentationsGrid.Rows[i].Cells[0].EditedFormattedValue;
 				AlbumName = titleInGrid.ToString().Split('.').FirstOrDefault()+".";
 				AlbumDesc = titleInGrid.ToString().Split('.').LastOrDefault();
@@ -89,6 +100,7 @@ namespace UploadApp
 					for (int j = 0; j < presentations.Length; j++)
 						{
 							await DataService.Upload(newAlbumId, presentations[j]);
+							progressUpload.PerformStep();
 						}
 				Directory.Delete(SelectedPath + "\\presentation" + (i + 1).ToString(),true);
 			}
@@ -120,6 +132,16 @@ namespace UploadApp
 		}
 
 		private void itemDropDown_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void subjectBox_Enter(object sender, EventArgs e)
+		{
+
+		}
+
+		private void groupBox1_Enter(object sender, EventArgs e)
 		{
 
 		}
