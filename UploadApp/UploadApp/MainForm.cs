@@ -31,6 +31,7 @@ namespace UploadApp
 
 		private void selectBtn_Click(object sender, EventArgs e)
 		{
+
 			var app = new PowerPoint.Application();
 			var pres = app.Presentations;
 			using (var fbd = new FolderBrowserDialog())
@@ -41,8 +42,12 @@ namespace UploadApp
 				if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(SelectedPath))
 				{
 					var files = Directory.GetFiles(SelectedPath);
+					progressBar.Maximum = files.Length;
+					progressBar.Step = 1;
+
 					for (int i = 0; i < files.Length; i++)
 					{
+						progressBar.PerformStep();
 						var file = pres.Open(files[i], MsoTriState.msoTrue, MsoTriState.msoTrue, MsoTriState.msoFalse);
 						char[] symbols = { '\\', '\0', '\a', '\b', '\f', '\n', '\r', '\t', '\v' };
 						if (file.Slides[1].Shapes.Title.TextEffect.Text.IndexOfAny(symbols) != -1)
@@ -120,6 +125,16 @@ namespace UploadApp
 		}
 
 		private void itemDropDown_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void subjectBox_Enter(object sender, EventArgs e)
+		{
+
+		}
+
+		private void groupBox1_Enter(object sender, EventArgs e)
 		{
 
 		}
