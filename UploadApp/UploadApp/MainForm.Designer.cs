@@ -41,6 +41,7 @@
 			this.slidesCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.progressUpload = new System.Windows.Forms.ProgressBar();
 			subjectBox = new System.Windows.Forms.GroupBox();
 			((System.ComponentModel.ISupportInitialize)(this.presentationsGrid)).BeginInit();
 			subjectBox.SuspendLayout();
@@ -50,7 +51,7 @@
 			// closeBtn
 			// 
 			this.closeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.closeBtn.Location = new System.Drawing.Point(202, 372);
+			this.closeBtn.Location = new System.Drawing.Point(196, 383);
 			this.closeBtn.Name = "closeBtn";
 			this.closeBtn.Size = new System.Drawing.Size(96, 28);
 			this.closeBtn.TabIndex = 0;
@@ -179,12 +180,20 @@
 			this.progressBar.Size = new System.Drawing.Size(496, 14);
 			this.progressBar.TabIndex = 9;
 			// 
+			// progressUpload
+			// 
+			this.progressUpload.Location = new System.Drawing.Point(15, 363);
+			this.progressUpload.Name = "progressUpload";
+			this.progressUpload.Size = new System.Drawing.Size(496, 14);
+			this.progressUpload.TabIndex = 10;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.CornflowerBlue;
-			this.ClientSize = new System.Drawing.Size(529, 404);
+			this.ClientSize = new System.Drawing.Size(529, 417);
+			this.Controls.Add(this.progressUpload);
 			this.Controls.Add(this.progressBar);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(subjectBox);
@@ -216,6 +225,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn slidesCount;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ProgressBar progressBar;
+		private System.Windows.Forms.ProgressBar progressUpload;
 	}
 }
 

@@ -82,11 +82,17 @@ namespace UploadApp
 			bindinglist.Add(album);
 			itemDropDown.SelectedItem = album;
 			bindinglist.Remove(selectedItem);
-
+			progressBar.Value = 0;
+			progressBar.Maximum = presentationsGrid.Rows.Count - 1;
+			progressBar.Step = 1;
 
 			for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
 			{
+				progressBar.PerformStep();
 				string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + (i + 1).ToString());
+				progressUpload.Value = 0;
+				progressUpload.Maximum = presentations.Length;
+				progressUpload.Step = 1;
 				var titleInGrid = presentationsGrid.Rows[i].Cells[0].EditedFormattedValue;
 				AlbumName = titleInGrid.ToString().Split('.').FirstOrDefault()+".";
 				AlbumDesc = titleInGrid.ToString().Split('.').LastOrDefault();
@@ -94,6 +100,7 @@ namespace UploadApp
 					for (int j = 0; j < presentations.Length; j++)
 						{
 							await DataService.Upload(newAlbumId, presentations[j]);
+							progressUpload.PerformStep();
 						}
 				Directory.Delete(SelectedPath + "\\presentation" + (i + 1).ToString(),true);
 			}
