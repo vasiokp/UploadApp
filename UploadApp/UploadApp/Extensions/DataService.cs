@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
-using Newtonsoft.Json;
 using System.IO;
 using System.Net;
-using System.Runtime.CompilerServices;
-using System.Windows.Forms;
 using static UploadApp.AlbumModel;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace UploadApp
 {
@@ -46,40 +43,40 @@ namespace UploadApp
 				request.RequestUri = new Uri(BaseUrl);
 				request.Method = HttpMethod.Get;
 				request.Headers.Add("Accept", "application /json");
-
+				var reg = new Regex("album-list.+albums");
+				
 				HttpResponseMessage response = client.SendAsync(request).GetAwaiter().GetResult();
 				var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-				dynamic js = JsonConvert.DeserializeObject(content);
-				AlbumCollectionUrl = js.collections["album-list"].href;
+				AlbumCollectionUrl = Regex.Split(reg.Match(content).Value.ToString(),"\":\"")[1];
+				AlbumCollectionUrl = Regex.Replace(AlbumCollectionUrl, "\\\\","") + "/";
 			}
 		}
 
 		public static void GetAlbumList()
 		{
-
 			using (var client = new HttpClient())
 			{
 				HttpRequestMessage request = new HttpRequestMessage();
+				var reg = new Regex("entries.+author");
 				request.RequestUri = new Uri(AlbumCollectionUrl);
 				request.Method = HttpMethod.Get;
 				request.Headers.Add("Accept", "application /json");
 
 				HttpResponseMessage response = client.SendAsync(request).GetAwaiter().GetResult();
 				var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-				dynamic js = JsonConvert.DeserializeObject(content);
-				dynamic list  = js.entries;
-				for (int i = 0; i < list.Count; i++)
+				var entries = reg.Match(content).Value;
+				var list = Regex.Split(entries, "links");
+				for (int i = 0; i < list.Length; i++)
 				{
-					if (list[i].links["album"]!=null)
-					{
-					}
-					else
-					{
-						var album = list[i].title.Value ;
-						var albumId = list[i].links["alternate"].ToString().Split('/')[6]; // index of id album in uri ;
-						var s = new AlbumListItem(albumId, album);
-							bindinglist.Add(s);
-					};
+					if (!Regex.IsMatch(list[i], "\"album")) 
+						if (Regex.IsMatch(list[i], "edit[^a-z]"))
+						{
+							var title = Regex.Match(list[i], "title.+author").Value;
+							title = Regex.Split(title, "[^a-zA-Z0-9АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюяІі ]+")[1];
+							var id = Regex.Match(list[i], "[0-9]+").Value;
+							var item = new AlbumListItem(id, title);
+							bindinglist.Add(item);
+						}
 				}
 			}
 		}
@@ -112,7 +109,8 @@ namespace UploadApp
 		{
 			byte[] image = File.ReadAllBytes(imgPath);
 			var imgName = imgPath.Split('\\').Last();
-
+			Debug.WriteLine("id: " + albumId);
+			Debug.WriteLine("path: " + imgPath);
 			string url = BaseUrl+"album/"+albumId+"/photos/"+Token;
 			using (var client = new HttpClient())
 			{
