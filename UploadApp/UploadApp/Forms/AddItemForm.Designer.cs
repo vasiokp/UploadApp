@@ -125,6 +125,7 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "AddItemForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Предмет";
 			this.Load += new System.EventHandler(this.AddItemForm_Load);
 			this.groupBox1.ResumeLayout(false);
