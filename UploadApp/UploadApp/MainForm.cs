@@ -31,7 +31,8 @@ namespace UploadApp
 
 		private void selectBtn_Click(object sender, EventArgs e)
 		{
-
+			presentationsGrid.Rows.Clear();
+			presentationsGrid.Refresh();
 			var app = new PowerPoint.Application();
 			var pres = app.Presentations;
 			using (var fbd = new FolderBrowserDialog())
@@ -42,9 +43,11 @@ namespace UploadApp
 				if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(SelectedPath))
 				{
 					var files = Directory.GetFiles(SelectedPath);
+					string rowTitle;
 					progressBar.Maximum = files.Length;
 					progressBar.Step = 1;
-
+					if (ActiveForm != null)
+						ActiveForm.UseWaitCursor = true;
 					for (int i = 0; i < files.Length; i++)
 					{
 						progressBar.PerformStep();
@@ -53,24 +56,32 @@ namespace UploadApp
 						if (file.Slides[1].Shapes.Title.TextEffect.Text.IndexOfAny(symbols) != -1)
 							{
 								var title = file.Slides[1].Shapes.Title.TextEffect.Text.Substring(0, file.Slides[1].Shapes.Title.TextEffect.Text.IndexOfAny(symbols));
-								AlbumName = title.Split(':', '.').FirstOrDefault();
-								AlbumDesc = title.Split(':', '.').LastOrDefault();
+								rowTitle = title.Split(':', '.').FirstOrDefault();
+								rowTitle +=". " + title.Split(':', '.').LastOrDefault();
 							}
 						else
 							{
-								AlbumName = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').FirstOrDefault();
-								AlbumDesc = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').LastOrDefault();
+								rowTitle = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').FirstOrDefault();
+								rowTitle += ". " + file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').LastOrDefault();
 							}
 						file.SaveCopyAs(SelectedPath + "\\presentation" + (i+1).ToString(), PowerPoint.PpSaveAsFileType.ppSaveAsJPG, MsoTriState.msoTrue);
 						string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + (i + 1).ToString());
-						presentationsGrid.Rows.Add(AlbumName.Trim() + ". " + AlbumDesc.Trim(), presentations.Length);
+						presentationsGrid.Rows.Add(rowTitle.Trim(), presentations.Length);
 					}
+
+					
+					uploadBtn.Enabled = true;
 				}
+				if (ActiveForm != null)
+					ActiveForm.UseWaitCursor = false;
 			}
 		}
 
 		private async void uploadBtn_Click(object sender, EventArgs e)
 		{
+			progressUpload.Visible = true;
+			if(ActiveForm != null)
+				ActiveForm.UseWaitCursor = false;
 			dynamic selectedItem = itemDropDown.SelectedItem;
 			AlbumName = selectedItem.Name;
 			AlbumId = selectedItem.Id;
@@ -86,7 +97,7 @@ namespace UploadApp
 			progressBar.Maximum = presentationsGrid.Rows.Count - 1;
 			progressBar.Step = 1;
 
-			for (int i = 0; i < presentationsGrid.Rows.Count-1; i++)
+			for (int i = 0; i < presentationsGrid.Rows.Count - 1; i++)
 			{
 				progressBar.PerformStep();
 				string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + (i + 1).ToString());
@@ -94,22 +105,26 @@ namespace UploadApp
 				progressUpload.Maximum = presentations.Length;
 				progressUpload.Step = 1;
 				var titleInGrid = presentationsGrid.Rows[i].Cells[0].EditedFormattedValue;
-				AlbumName = titleInGrid.ToString().Split('.').FirstOrDefault()+".";
+				AlbumName = titleInGrid.ToString().Split('.').FirstOrDefault() + ".";
 				AlbumDesc = titleInGrid.ToString().Split('.').LastOrDefault();
 				var newAlbumId = DataService.CreateAlbum(AlbumName, AlbumDesc, AlbumId);
-					for (int j = 0; j < presentations.Length; j++)
-						{
-							await DataService.Upload(newAlbumId, presentations[j]);
-							progressUpload.PerformStep();
-						}
-				Directory.Delete(SelectedPath + "\\presentation" + (i + 1).ToString(),true);
+				for (int j = 0; j < presentations.Length; j++)
+				{
+					await DataService.Upload(newAlbumId, presentations[j]);
+					progressUpload.PerformStep();
+				}
+				Directory.Delete(SelectedPath + "\\presentation" + (i + 1).ToString(), true);
 			}
+			MessageBox.Show("Завершено");
 		}
 
 		private void addItemBtn_Click(object sender, EventArgs e)
 		{
+			presentationsGrid.Rows.Clear();
+			presentationsGrid.Refresh();
 			var itemForm = new AddItemForm();
 			itemForm.ShowDialog();
+			itemDropDown.SelectedIndex = itemDropDown.Items.Count-1;
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
@@ -126,6 +141,8 @@ namespace UploadApp
 
 		private void deleteBtn_Click(object sender, EventArgs e)
 		{
+			presentationsGrid.Rows.Clear();
+			presentationsGrid.Refresh();
 			dynamic subjName = itemDropDown.SelectedItem;
 			var deleteForm  = new DeleteSubjectForm(subjName.Id, subjName.Name);
 			deleteForm.ShowDialog();
@@ -144,6 +161,12 @@ namespace UploadApp
 		private void groupBox1_Enter(object sender, EventArgs e)
 		{
 
+		}
+
+		private void MainForm_Activated(object sender, EventArgs e)
+		{
+			if (uploadBtn.Enabled)
+				ActiveForm.UseWaitCursor = false;
 		}
 	}
 }

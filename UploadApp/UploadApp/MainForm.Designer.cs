@@ -29,106 +29,24 @@
 		private void InitializeComponent()
 		{
 			System.Windows.Forms.GroupBox subjectBox;
+			this.itemDropDown = new System.Windows.Forms.ComboBox();
+			this.deleteBtn = new System.Windows.Forms.Button();
+			this.addItemBtn = new System.Windows.Forms.Button();
 			this.closeBtn = new System.Windows.Forms.Button();
 			this.selectBtn = new System.Windows.Forms.Button();
 			this.openFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.presentationsGrid = new System.Windows.Forms.DataGridView();
-			this.uploadBtn = new System.Windows.Forms.Button();
-			this.itemDropDown = new System.Windows.Forms.ComboBox();
-			this.addItemBtn = new System.Windows.Forms.Button();
-			this.deleteBtn = new System.Windows.Forms.Button();
 			this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slidesCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.uploadBtn = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.progressUpload = new System.Windows.Forms.ProgressBar();
 			subjectBox = new System.Windows.Forms.GroupBox();
-			((System.ComponentModel.ISupportInitialize)(this.presentationsGrid)).BeginInit();
 			subjectBox.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.presentationsGrid)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// closeBtn
-			// 
-			this.closeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.closeBtn.Location = new System.Drawing.Point(196, 383);
-			this.closeBtn.Name = "closeBtn";
-			this.closeBtn.Size = new System.Drawing.Size(96, 28);
-			this.closeBtn.TabIndex = 0;
-			this.closeBtn.Text = "Вихід";
-			this.closeBtn.UseVisualStyleBackColor = true;
-			this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
-			// 
-			// selectBtn
-			// 
-			this.selectBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.selectBtn.Location = new System.Drawing.Point(48, 23);
-			this.selectBtn.Name = "selectBtn";
-			this.selectBtn.Size = new System.Drawing.Size(96, 28);
-			this.selectBtn.TabIndex = 1;
-			this.selectBtn.Text = "Каталог";
-			this.selectBtn.UseVisualStyleBackColor = true;
-			this.selectBtn.Click += new System.EventHandler(this.selectBtn_Click);
-			// 
-			// presentationsGrid
-			// 
-			this.presentationsGrid.BackgroundColor = System.Drawing.SystemColors.ScrollBar;
-			this.presentationsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.presentationsGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.title,
-            this.slidesCount});
-			this.presentationsGrid.GridColor = System.Drawing.Color.CornflowerBlue;
-			this.presentationsGrid.Location = new System.Drawing.Point(15, 152);
-			this.presentationsGrid.Name = "presentationsGrid";
-			this.presentationsGrid.Size = new System.Drawing.Size(496, 185);
-			this.presentationsGrid.TabIndex = 2;
-			// 
-			// uploadBtn
-			// 
-			this.uploadBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.uploadBtn.Location = new System.Drawing.Point(48, 66);
-			this.uploadBtn.Name = "uploadBtn";
-			this.uploadBtn.Size = new System.Drawing.Size(107, 28);
-			this.uploadBtn.TabIndex = 3;
-			this.uploadBtn.Text = "Завантажити";
-			this.uploadBtn.UseVisualStyleBackColor = true;
-			this.uploadBtn.Click += new System.EventHandler(this.uploadBtn_Click);
-			// 
-			// itemDropDown
-			// 
-			this.itemDropDown.BackColor = System.Drawing.SystemColors.Window;
-			this.itemDropDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.itemDropDown.FormattingEnabled = true;
-			this.itemDropDown.Location = new System.Drawing.Point(21, 32);
-			this.itemDropDown.Name = "itemDropDown";
-			this.itemDropDown.Size = new System.Drawing.Size(200, 24);
-			this.itemDropDown.TabIndex = 4;
-			this.itemDropDown.SelectedIndexChanged += new System.EventHandler(this.itemDropDown_SelectedIndexChanged);
-			// 
-			// addItemBtn
-			// 
-			this.addItemBtn.BackColor = System.Drawing.Color.SpringGreen;
-			this.addItemBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.addItemBtn.ForeColor = System.Drawing.Color.Black;
-			this.addItemBtn.Location = new System.Drawing.Point(21, 62);
-			this.addItemBtn.Name = "addItemBtn";
-			this.addItemBtn.Size = new System.Drawing.Size(84, 32);
-			this.addItemBtn.TabIndex = 5;
-			this.addItemBtn.Text = "Додати";
-			this.addItemBtn.UseVisualStyleBackColor = false;
-			this.addItemBtn.Click += new System.EventHandler(this.addItemBtn_Click);
-			// 
-			// deleteBtn
-			// 
-			this.deleteBtn.BackColor = System.Drawing.Color.Red;
-			this.deleteBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.deleteBtn.Location = new System.Drawing.Point(125, 61);
-			this.deleteBtn.Name = "deleteBtn";
-			this.deleteBtn.Size = new System.Drawing.Size(84, 35);
-			this.deleteBtn.TabIndex = 6;
-			this.deleteBtn.Text = "Видалити";
-			this.deleteBtn.UseVisualStyleBackColor = false;
-			this.deleteBtn.Click += new System.EventHandler(this.deleteBtn_Click);
 			// 
 			// subjectBox
 			// 
@@ -147,6 +65,79 @@
 			subjectBox.Text = "Вибір предмету";
 			subjectBox.Enter += new System.EventHandler(this.subjectBox_Enter);
 			// 
+			// itemDropDown
+			// 
+			this.itemDropDown.BackColor = System.Drawing.SystemColors.Window;
+			this.itemDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.itemDropDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.itemDropDown.FormattingEnabled = true;
+			this.itemDropDown.Location = new System.Drawing.Point(21, 32);
+			this.itemDropDown.Name = "itemDropDown";
+			this.itemDropDown.Size = new System.Drawing.Size(200, 24);
+			this.itemDropDown.TabIndex = 4;
+			this.itemDropDown.SelectedIndexChanged += new System.EventHandler(this.itemDropDown_SelectedIndexChanged);
+			// 
+			// deleteBtn
+			// 
+			this.deleteBtn.BackColor = System.Drawing.Color.Red;
+			this.deleteBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.deleteBtn.Location = new System.Drawing.Point(125, 61);
+			this.deleteBtn.Name = "deleteBtn";
+			this.deleteBtn.Size = new System.Drawing.Size(84, 35);
+			this.deleteBtn.TabIndex = 6;
+			this.deleteBtn.Text = "Видалити";
+			this.deleteBtn.UseVisualStyleBackColor = false;
+			this.deleteBtn.Click += new System.EventHandler(this.deleteBtn_Click);
+			// 
+			// addItemBtn
+			// 
+			this.addItemBtn.BackColor = System.Drawing.Color.SpringGreen;
+			this.addItemBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.addItemBtn.ForeColor = System.Drawing.Color.Black;
+			this.addItemBtn.Location = new System.Drawing.Point(21, 62);
+			this.addItemBtn.Name = "addItemBtn";
+			this.addItemBtn.Size = new System.Drawing.Size(84, 32);
+			this.addItemBtn.TabIndex = 5;
+			this.addItemBtn.Text = "Додати";
+			this.addItemBtn.UseVisualStyleBackColor = false;
+			this.addItemBtn.Click += new System.EventHandler(this.addItemBtn_Click);
+			// 
+			// closeBtn
+			// 
+			this.closeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.closeBtn.Location = new System.Drawing.Point(196, 383);
+			this.closeBtn.Name = "closeBtn";
+			this.closeBtn.Size = new System.Drawing.Size(96, 28);
+			this.closeBtn.TabIndex = 0;
+			this.closeBtn.Text = "Вихід";
+			this.closeBtn.UseVisualStyleBackColor = true;
+			this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
+			// 
+			// selectBtn
+			// 
+			this.selectBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.selectBtn.Location = new System.Drawing.Point(50, 28);
+			this.selectBtn.Name = "selectBtn";
+			this.selectBtn.Size = new System.Drawing.Size(107, 28);
+			this.selectBtn.TabIndex = 1;
+			this.selectBtn.Text = "Каталог";
+			this.selectBtn.UseVisualStyleBackColor = true;
+			this.selectBtn.Click += new System.EventHandler(this.selectBtn_Click);
+			// 
+			// presentationsGrid
+			// 
+			this.presentationsGrid.BackgroundColor = System.Drawing.SystemColors.ScrollBar;
+			this.presentationsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.presentationsGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.title,
+            this.slidesCount});
+			this.presentationsGrid.GridColor = System.Drawing.Color.CornflowerBlue;
+			this.presentationsGrid.Location = new System.Drawing.Point(12, 152);
+			this.presentationsGrid.Name = "presentationsGrid";
+			this.presentationsGrid.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.presentationsGrid.Size = new System.Drawing.Size(502, 185);
+			this.presentationsGrid.TabIndex = 2;
+			// 
 			// title
 			// 
 			this.title.HeaderText = "Заголовок теми";
@@ -158,6 +149,18 @@
 			this.slidesCount.HeaderText = "Слайдів";
 			this.slidesCount.Name = "slidesCount";
 			this.slidesCount.Width = 50;
+			// 
+			// uploadBtn
+			// 
+			this.uploadBtn.Enabled = false;
+			this.uploadBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.uploadBtn.Location = new System.Drawing.Point(50, 64);
+			this.uploadBtn.Name = "uploadBtn";
+			this.uploadBtn.Size = new System.Drawing.Size(107, 28);
+			this.uploadBtn.TabIndex = 3;
+			this.uploadBtn.Text = "Завантажити";
+			this.uploadBtn.UseVisualStyleBackColor = true;
+			this.uploadBtn.Click += new System.EventHandler(this.uploadBtn_Click);
 			// 
 			// groupBox1
 			// 
@@ -186,6 +189,7 @@
 			this.progressUpload.Name = "progressUpload";
 			this.progressUpload.Size = new System.Drawing.Size(496, 14);
 			this.progressUpload.TabIndex = 10;
+			this.progressUpload.Visible = false;
 			// 
 			// MainForm
 			// 
@@ -203,9 +207,10 @@
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Посібник";
+			this.Activated += new System.EventHandler(this.MainForm_Activated);
 			this.Load += new System.EventHandler(this.MainForm_Load);
-			((System.ComponentModel.ISupportInitialize)(this.presentationsGrid)).EndInit();
 			subjectBox.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.presentationsGrid)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
