@@ -36,12 +36,12 @@
 			this.selectBtn = new System.Windows.Forms.Button();
 			this.openFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.presentationsGrid = new System.Windows.Forms.DataGridView();
-			this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.slidesCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.uploadBtn = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.progressUpload = new System.Windows.Forms.ProgressBar();
+			this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.slidesCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			subjectBox = new System.Windows.Forms.GroupBox();
 			subjectBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.presentationsGrid)).BeginInit();
@@ -138,18 +138,6 @@
 			this.presentationsGrid.Size = new System.Drawing.Size(502, 185);
 			this.presentationsGrid.TabIndex = 2;
 			// 
-			// title
-			// 
-			this.title.HeaderText = "Заголовок теми";
-			this.title.Name = "title";
-			this.title.Width = 400;
-			// 
-			// slidesCount
-			// 
-			this.slidesCount.HeaderText = "Слайдів";
-			this.slidesCount.Name = "slidesCount";
-			this.slidesCount.Width = 50;
-			// 
 			// uploadBtn
 			// 
 			this.uploadBtn.Enabled = false;
@@ -191,6 +179,18 @@
 			this.progressUpload.TabIndex = 10;
 			this.progressUpload.Visible = false;
 			// 
+			// title
+			// 
+			this.title.HeaderText = "Заголовок теми";
+			this.title.Name = "title";
+			this.title.Width = 400;
+			// 
+			// slidesCount
+			// 
+			this.slidesCount.HeaderText = "К-сть";
+			this.slidesCount.Name = "slidesCount";
+			this.slidesCount.Width = 50;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -226,11 +226,11 @@
 		private System.Windows.Forms.ComboBox itemDropDown;
 		private System.Windows.Forms.Button addItemBtn;
 		private System.Windows.Forms.Button deleteBtn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn title;
-		private System.Windows.Forms.DataGridViewTextBoxColumn slidesCount;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ProgressBar progressBar;
 		private System.Windows.Forms.ProgressBar progressUpload;
+		private System.Windows.Forms.DataGridViewTextBoxColumn title;
+		private System.Windows.Forms.DataGridViewTextBoxColumn slidesCount;
 	}
 }
 

@@ -35,6 +35,7 @@
 			this.CreateItemBtn = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.label1 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -90,6 +91,7 @@
 			// groupBox1
 			// 
 			this.groupBox1.BackColor = System.Drawing.Color.Coral;
+			this.groupBox1.Controls.Add(this.label3);
 			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.closeAddItemFormBtn);
 			this.groupBox1.Controls.Add(this.CreateItemBtn);
@@ -113,6 +115,20 @@
 			this.label1.Size = new System.Drawing.Size(56, 18);
 			this.label1.TabIndex = 3;
 			this.label1.Text = "Назва";
+			this.label1.Click += new System.EventHandler(this.label1_Click);
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.BackColor = System.Drawing.Color.Transparent;
+			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.label3.ForeColor = System.Drawing.Color.Red;
+			this.label3.Location = new System.Drawing.Point(296, 34);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(18, 24);
+			this.label3.TabIndex = 6;
+			this.label3.Text = "*";
+			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// AddItemForm
 			// 
@@ -143,5 +159,6 @@
 		private System.Windows.Forms.Button CreateItemBtn;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label3;
 	}
 }
