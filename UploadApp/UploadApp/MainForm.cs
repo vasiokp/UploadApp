@@ -53,22 +53,21 @@ namespace UploadApp
 						progressBar.PerformStep();
 						var file = pres.Open(files[i], MsoTriState.msoTrue, MsoTriState.msoTrue, MsoTriState.msoFalse);
 						char[] symbols = { '\\', '\0', '\a', '\b', '\f', '\n', '\r', '\t', '\v' };
-						if (file.Slides[1].Shapes.Title.TextEffect.Text.IndexOfAny(symbols) != -1)
+						if (file.Slides[1].Shapes[1].TextFrame.TextRange.Text.IndexOfAny(symbols) != -1)
 							{
-								var title = file.Slides[1].Shapes.Title.TextEffect.Text.Substring(0, file.Slides[1].Shapes.Title.TextEffect.Text.IndexOfAny(symbols));
+								var title = file.Slides[1].Shapes[1].TextFrame.TextRange.Text.Substring(0, file.Slides[1].Shapes[1].TextFrame.TextRange.Text.IndexOfAny(symbols));
 								rowTitle = title.Split(':', '.').FirstOrDefault();
 								rowTitle +=". " + title.Split(':', '.').LastOrDefault();
 							}
 						else
 							{
-								rowTitle = file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').FirstOrDefault();
-								rowTitle += ". " + file.Slides[1].Shapes.Title.TextEffect.Text.Split(':', '.').LastOrDefault();
+								rowTitle = file.Slides[1].Shapes[1].TextFrame.TextRange.Text.Split(':', '.').FirstOrDefault();
+								rowTitle += ". " + file.Slides[1].Shapes[1].TextFrame.TextRange.Text.Split(':', '.').LastOrDefault();
 							}
 						file.SaveCopyAs(SelectedPath + "\\presentation" + (i+1).ToString(), PowerPoint.PpSaveAsFileType.ppSaveAsJPG, MsoTriState.msoTrue);
 						string[] presentations = Directory.GetFiles(SelectedPath + "\\presentation" + (i + 1).ToString());
 						presentationsGrid.Rows.Add(rowTitle.Trim(), presentations.Length);
 					}
-
 					
 					uploadBtn.Enabled = true;
 				}
